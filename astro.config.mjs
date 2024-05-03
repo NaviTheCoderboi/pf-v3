@@ -4,5 +4,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
     prefetch: {
         defaultStrategy: "tap"
-    }
+    },
+    site: "https://navithecoderboi.github.io/",
+    base: "pf-v3"
 });
