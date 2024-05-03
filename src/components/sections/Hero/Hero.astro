@@ -1,0 +1,106 @@
+---
+import heroImage from "@assets/hero.png";
+import { Picture } from "astro:assets";
+import HeroWrapper from "./HeroWrapper.astro";
+import Star from "@assets/icons/Star.astro";
+---
+
+<HeroWrapper>
+    <div class="max-w-7xl mx-auto px-5">
+        <main class="grid lg:grid-cols-2 place-items-center py-16 md:py-12">
+            <div class="order-2 md:order-1">
+                <Picture
+                    src={heroImage}
+                    alt="Astronaut in the air"
+                    widths={[200, 400, 600]}
+                    sizes="(max-width: 800px) 100vw, 620px"
+                    loading="eager"
+                    format="webp"
+                    id="hero__image"
+                />
+            </div>
+            <div class="flex flex-col gap-4">
+                <h1
+                    class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter slide fade"
+                >
+                    Hello, I am <span
+                        class="text-transparent bg-clip-text bg-gradient-to-br from-primary-400 to-70% via-85% via-accent-500 to-100% to-secondary-400"
+                    >
+                        Navinder Singh
+                    </span>
+                </h1>
+                <h2 class="text-4xl font-medium text-primary-200">
+                    I am a <span id="hero__typewriter__text"></span>
+                </h2>
+                <p class="text-lg text-zinc-400 font-medium max-w-xl">
+                    Hey there! I'm Navinder Singh, a high schooler with big
+                    dreams from India destined to be a doctor! When I'm not
+                    hitting the books, you'll find me lost in the world of
+                    coding.
+                </p>
+                <ul class="flex items-center gap-5">
+                    <a
+                        href="https://github.com/navithecoderboi/portfolio"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="p-1 relative active:scale-95 duration-200"
+                    >
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-secondary-500 to-accent-500 rounded-lg"
+                        >
+                        </div>
+                        <div
+                            class="px-4 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent inline-flex justify-center items-center gap-3"
+                        >
+                            <Star size="md" class="text-zinc-200" /> on GitHub
+                        </div>
+                    </a>
+                </ul>
+            </div>
+        </main>
+    </div>
+</HeroWrapper>
+
+<style>
+    #hero__image {
+        animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-40px);
+        }
+    }
+</style>
+
+<script>
+    // prettier-off
+    import TypeIt from "typeit";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        new TypeIt("#hero__typewriter__text", {
+            speed: 100,
+            deleteSpeed: 70,
+            loop: true
+        })
+            .type("student")
+            .pause(1000)
+            .delete(7)
+            .type("fullstack developer")
+            .pause(1000)
+            .delete(19)
+            .type("blogger")
+            .pause(1000)
+            .delete(7)
+            .type("learner")
+            .pause(1000)
+            .go();
+    });
+
+    // prettier-on
+</script>

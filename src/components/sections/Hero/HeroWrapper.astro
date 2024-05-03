@@ -1,0 +1,50 @@
+<div
+    class="relative min-h-screen bg-bg flex items-center justify-center w-full group"
+    id="hero__canvas"
+>
+    <div class="absolute inset-0 pointer-events-none" id="hero__canvas__bg">
+    </div>
+    <div
+        class="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
+        id="hero__canvas__mask"
+    >
+    </div>
+    <div class="relative z-20">
+        <slot />
+    </div>
+</div>
+
+<style>
+    #hero__canvas__bg {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='20' height='20' fill='none'%3E%3Ccircle fill='%2327272a' id='pattern-circle' cx='10' cy='10' r='2.5'%3E%3C/circle%3E%3C/svg%3E");
+    }
+
+    #hero__canvas__mask {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='20' height='20' fill='none'%3E%3Ccircle fill='oklch(57.674%25 0.19162 304.03)' id='pattern-circle' cx='10' cy='10' r='2.5'%3E%3C/circle%3E%3C/svg%3E");
+    }
+</style>
+
+<script>
+    // prettier-off
+    const heroCanvas = document.getElementById(
+        "hero__canvas"
+    ) as HTMLDivElement;
+    const heroCanvasMask = document.getElementById(
+        "hero__canvas__mask"
+    ) as HTMLDivElement;
+
+    heroCanvas.addEventListener("mousemove", (e) => {
+        let { left, top } = heroCanvas.getBoundingClientRect();
+
+        let mouseX = e.clientX - left;
+        let mouseY = e.clientY - top;
+
+        heroCanvasMask.style.maskImage = `radial-gradient(
+            300px circle at ${mouseX}px ${mouseY}px,
+            black 0%,
+            transparent 100%
+        )`;
+    });
+
+    // prettier-off
+</script>
