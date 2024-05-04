@@ -6,5 +6,5 @@ export default defineConfig({
         defaultStrategy: "tap"
     },
     site: "https://navithecoderboi.github.io/",
-    base: "pf-3"
+    base: "pf-v3"
 });
