@@ -5,6 +5,5 @@ export default defineConfig({
     prefetch: {
         defaultStrategy: "tap"
     },
-    site: "https://navithecoderboi.github.io/",
-    base: "pf-v3"
+    site: "https://navithecoderboi.github.io/pf-3"
 });

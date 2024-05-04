@@ -1,0 +1,81 @@
+---
+import Menu from "@assets/icons/Menu.astro";
+
+const links = {
+    Home: "/",
+    About: "/#about",
+    Projects: "/#projects",
+    Blog: "/blog"
+} as const;
+---
+
+<div class="flex justify-end items-center lg:hidden">
+    <input type="checkbox" class="hidden" id="navbar__sidebar__input" />
+    <Menu id="navbar__sidebar__icon" />
+    <div
+        class="hidden fixed top-0 left-0 bg-black/50 w-full h-screen z-[53] overflow-hidden"
+        id="navbar__sidebar__backdrop"
+    >
+        <div
+            class="absolute right-0 top-0 w-3/5 h-screen bg-zinc-800 duration-300 z-[54]"
+            id="navbar__sidebar__menu"
+        >
+            <ul
+                class="flex flex-col justify-center items-center gap-6 h-full pb-20"
+            >
+                {
+                    Object.entries(links).map(([k, v]) => (
+                        <li class="text-xl font-semibold text-zinc-200 hover:text-zinc-100 duration-300">
+                            <a href={v}>{k}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sleep = (ms: number) =>
+        new Promise((resolve) => setTimeout(resolve, ms));
+
+    const input = document.getElementById(
+        "navbar__sidebar__input"
+    )! as HTMLInputElement;
+    const backdrop = document.getElementById(
+        "navbar__sidebar__backdrop"
+    )! as HTMLDivElement;
+    const icon = document.getElementById(
+        "navbar__sidebar__icon"
+    )! as HTMLButtonElement;
+    const menu = document.getElementById(
+        "navbar__sidebar__menu"
+    )! as HTMLDivElement;
+
+    if (input.checked === true) {
+        backdrop.style.display = "flex";
+        menu.style.display = "inline-block";
+        menu.style.transform = "translateX(0%)";
+    } else {
+        backdrop.style.display = "none";
+        menu.style.display = "none";
+        menu.style.transform = "translateX(200%)";
+    }
+
+    icon.addEventListener("click", () => {
+        input.checked = !input.checked;
+        if (input.checked === true) {
+            backdrop.style.display = "flex";
+            menu.style.display = "inline-block";
+            sleep(100).then(() => {
+                menu.style.transform = "translateX(0%)";
+            });
+        } else {
+            menu.style.transform = "translateX(200%)";
+            sleep(200).then(() => {
+                menu.style.display = "none";
+                backdrop.style.display = "none";
+            });
+        }
+    });
+</script>
