@@ -2,10 +2,10 @@
 import Menu from "@assets/icons/Menu.astro";
 
 const links = {
-    Home: "/",
-    About: "/#about",
-    Projects: "/#projects",
-    Blog: "/blog"
+    Home: import.meta.env.BASE_URL,
+    About: import.meta.env.BASE_URL + "#about",
+    Projects: import.meta.env.BASE_URL + "#projects",
+    Blog: import.meta.env.BASE_URL + "blog"
 } as const;
 ---
 
