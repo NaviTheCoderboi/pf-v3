@@ -1,5 +1,6 @@
 ---
 import Github from "@assets/icons/Github.astro";
+import Logo from "@assets/logo.png";
 import { Image } from "astro:assets";
 import Sidebar from "./Sidebar.astro";
 
@@ -16,12 +17,7 @@ const links = {
         class="mx-auto w-full lg:w-3/5 h-full grid place-content-between grid-rows-1 grid-cols-2 lg:grid-cols-3 px-7 md:px-10 py-4 lg:rounded-full backdrop-filter backdrop-blur-sm bg-zinc-800/30"
     >
         <a href="/">
-            <Image
-                src="/logo.webp"
-                alt="navithecoderboi"
-                width={50}
-                height={60}
-            />
+            <Image src={Logo} alt="navithecoderboi" width={50} height={60} />
         </a>
         <ul class="lg:flex justify-center items-center gap-2 hidden">
             {

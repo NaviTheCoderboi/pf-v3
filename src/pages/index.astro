@@ -1,4 +1,5 @@
 ---
+import Logo from "@assets/logo.png";
 import About from "@components/sections/About/About.astro";
 import Hero from "@components/sections/Hero/Hero.astro";
 import Projects from "@components/sections/Projects/Projects.astro";
@@ -8,7 +9,7 @@ import Layout from "@layouts/Layout.astro";
 <Layout
     title="NaviTheCoderboi | portfolio"
     description="Hello! I'm NaviTheCoderboi, a developer from India. Welcome to my portfolio! you can read about me here and my blogs too"
-    icon="/logo.webp"
+    icon={Logo.src}
     canonical={import.meta.env.SITE}
     themeColor="#7828c8"
     url={import.meta.env.SITE}
