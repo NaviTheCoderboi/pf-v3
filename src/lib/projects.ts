@@ -7,13 +7,13 @@ interface Project {
 
 const getProjects = async (): Promise<Project[]> => {
     const projectPaths: any = import.meta.glob<{ default: Project }>(
-        "/src/content/projects/*.json"
+        "/src/lib/projects/*.json"
     );
     // @ts-ignore
     return (
         await Promise.all(
             Object.keys(projectPaths).map((k) => {
-                if (k == "/src/content/projects/base.json") return;
+                if (k == "/src/lib/projects/base.json") return;
                 return projectPaths[k]();
             })
         )

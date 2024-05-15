@@ -1,5 +1,4 @@
 ---
-import Open from "@assets/icons/Open.astro";
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import GradientBg from "./GradientBg.astro";
@@ -20,8 +19,11 @@ const importedBanner: ImageMetadata = (
 ---
 
 <GradientBg animationDelay={animationDelay}>
-    <div
-        class="relative z-10 h-[--width-sm] max-w-xs rounded-[inherit] p-4 bg-zinc-900 flex flex-col gap-4 hover:translate-z-2 duration-200"
+    <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="relative z-10 h-[--width-xs] max-w-72 rounded-[inherit] p-4 bg-zinc-900 flex flex-col gap-4 hover:translate-z-2 duration-200"
     >
         <Image
             src={importedBanner}
@@ -36,16 +38,6 @@ const importedBanner: ImageMetadata = (
             <p class="text-sm text-neutral-400">
                 {description}
             </p>
-            <div class="flex items-end grow">
-                <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex justify-center items-center gap-2 text-sm font-light leading-tight px-2.5 py-1 rounded-full bg-zinc-700 hover:bg-zinc-800 duration-200"
-                >
-                    Visit <Open class="size-4" />
-                </a>
-            </div>
         </div>
-    </div>
+    </a>
 </GradientBg>
