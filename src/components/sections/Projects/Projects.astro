@@ -1,0 +1,31 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import { getProjects } from "@lib/projects";
+import Card from "./Card.astro";
+
+const projects = await getProjects();
+---
+
+<section class="lg:min-h-screen w-full" id="projects">
+    <div
+        class="flex flex-col justify-center gap-10 h-full w-6/7 lg:w-5/9 mx-auto pt-[7.4rem] pb-16 h-full"
+    >
+        <SectionHeader title="Projects" serial={2} />
+        <ul
+            class="flex h-full w-full flex-wrap items-center justify-center gap-7"
+        >
+            {
+                projects.map((pj, i) => (
+                    <Card
+                        title={pj.title}
+                        description={pj.description}
+                        url={pj.url}
+                        banner={pj.banner}
+                        animationDelay={200 + i * 100}
+                    />
+                ))
+            }
+        </ul>
+    </div>
+    <slot />
+</section>

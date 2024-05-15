@@ -1,18 +1,23 @@
 ---
-import Navbar from "@components/Navbar.astro";
 import "@styles/globals.css";
+import "@fontsource-variable/inter";
+import Navbar from "@components/Navbar.astro";
+import { ViewTransitions, fade } from "astro:transitions";
+import SEO from "@components/SEO.astro";
+
+interface Props extends SEOProps {}
+
+const { ...rest } = Astro.props;
 ---
 
 <html lang="en">
     <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Astro</title>
+        <ViewTransitions />
+        <SEO {...rest} />
     </head>
-    <body>
+    <body transition:animate={fade({ duration: "0.5s" })}>
         <Navbar />
         <slot />
+        <script src="../lib/motion.ts"></script>
     </body>
 </html>

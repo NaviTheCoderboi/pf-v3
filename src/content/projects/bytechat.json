@@ -1,0 +1,7 @@
+{
+    "$schema": "./base.json",
+    "title": "ByteChat",
+    "description": "A feature rich chat app made for developers by developers",
+    "url": "https://github.com/Devaunch/ByteChat",
+    "banner": "bytechat"
+}

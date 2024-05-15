@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 @theme {
     --bg: oklch(0% 0 0);
@@ -39,11 +38,15 @@
     --color-accent-900: var(--color-pink-900);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--bg);
     color: var(--fg);
     font-family:
-        "Inter",
+        "Inter Variable",
         system-ui,
         -apple-system,
         BlinkMacSystemFont,
@@ -58,6 +61,34 @@ body {
     font-weight: 400;
 }
 
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+    width: 12px;
+    background: oklch(0% 0 0);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-slate-700);
+}
+
 img {
     content-visibility: auto;
+}
+
+.animate-meteor-effect {
+    animation: meteor 5s linear infinite;
+}
+
+@keyframes meteor {
+    0% {
+        transform: rotate(215deg) translateX(0);
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(215deg) translateX(-500px);
+        opacity: 0;
+    }
 }

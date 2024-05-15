@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": "The projects base schema",
+    "description": "The base schema for all projects",
+    "properties": {
+        "$schema": {
+            "description": "A field for the [JSON schema](https://json-schema.org/) specification",
+            "type": ["string", "null"]
+        },
+        "title": {
+            "description": "The title of the project",
+            "type": "string"
+        },
+        "description": {
+            "description": "A description of the project",
+            "type": "string"
+        },
+        "url": {
+            "description": "The URL of the project",
+            "type": "string"
+        },
+        "banner": {
+            "description": "The URL of the banner image for the project",
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "$schema": "./base.json",
+    "title": "Notestar",
+    "description": "A notes app made using sveltekit and tailwindcss, store your notes in the cloud now!",
+    "url": "https://notestar.vercel.app/",
+    "banner": "notestar"
+}

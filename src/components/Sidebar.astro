@@ -1,81 +1,106 @@
 ---
-import Menu from "@assets/icons/Menu.astro";
+import Home from "@assets/icons/Home.astro";
+import About from "@assets/icons/About.astro";
+import Projects from "@assets/icons/Projects.astro";
+import Blog from "@assets/icons/Blog.astro";
 
 const links = {
-    Home: import.meta.env.BASE_URL,
-    About: import.meta.env.BASE_URL + "#about",
-    Projects: import.meta.env.BASE_URL + "#projects",
-    Blog: import.meta.env.BASE_URL + "blog"
+    Home: ["/#", Home],
+    About: ["/#about", About],
+    Projects: ["/#projects", Projects],
+    Blog: ["/blog", Blog]
 } as const;
 ---
 
-<div class="flex justify-end items-center lg:hidden">
-    <input type="checkbox" class="hidden" id="navbar__sidebar__input" />
-    <Menu id="navbar__sidebar__icon" />
+<div class="flex justify-end items-center lg:hidden overflow-hidden">
+    <button class="flex flex-col gap-2 w-12 h-8 z-[52]" id="sidebar__trigger">
+        <div class="bar-1 w-full h-full bg-white rounded-full duration-200">
+        </div>
+        <div class="bar-2 w-full h-full bg-white rounded-full duration-200">
+        </div>
+        <div class="bar-3 w-full h-full bg-white rounded-full duration-200">
+        </div>
+        <input type="checkbox" checked={false} class="sr-only" />
+    </button>
     <div
-        class="hidden fixed top-0 left-0 bg-black/50 w-full h-screen z-[53] overflow-hidden"
-        id="navbar__sidebar__backdrop"
+        class="justify-end fixed top-0 left-0 bg-black/40 w-full h-screen hidden z-[51] overflow-hidden touch-none"
+        id="sidebar__nav__backdrop"
     >
-        <div
-            class="absolute right-0 top-0 w-3/5 h-screen bg-zinc-800 duration-300 z-[54]"
-            id="navbar__sidebar__menu"
-        >
+        <nav class="w-2/3 bg-zinc-800 h-full duration-300 pt-24">
             <ul
-                class="flex flex-col justify-center items-center gap-6 h-full pb-20"
+                class="w-full flex flex-col justify-center items-center gap-4 h-fit"
             >
                 {
-                    Object.entries(links).map(([k, v]) => (
-                        <li class="text-xl font-semibold text-zinc-200 hover:text-zinc-100 duration-300">
-                            <a href={v}>{k}</a>
+                    Object.entries(links).map(([name, [href, Icon]]) => (
+                        <li class="w-full px-8 py-2 sm:px-16">
+                            <a
+                                href={href}
+                                class="w-full flex justify-start items-center text-white hover:text-zinc-300 duration-300 text-2xl sm:text-4xl font-semibold gap-4"
+                            >
+                                <Icon class="size-6 sm:size-10" />
+                                {name}
+                            </a>
                         </li>
                     ))
                 }
             </ul>
-        </div>
+        </nav>
     </div>
 </div>
 
 <script>
-    const sleep = (ms: number) =>
+    const delay = (ms: number) =>
         new Promise((resolve) => setTimeout(resolve, ms));
 
-    const input = document.getElementById(
-        "navbar__sidebar__input"
-    )! as HTMLInputElement;
-    const backdrop = document.getElementById(
-        "navbar__sidebar__backdrop"
-    )! as HTMLDivElement;
-    const icon = document.getElementById(
-        "navbar__sidebar__icon"
+    const trigger = document.getElementById(
+        "sidebar__trigger"
     )! as HTMLButtonElement;
-    const menu = document.getElementById(
-        "navbar__sidebar__menu"
-    )! as HTMLDivElement;
+    const bar1 = trigger.querySelector<HTMLDivElement>(".bar-1")!;
+    const bar2 = trigger.querySelector<HTMLDivElement>(".bar-2")!;
+    const bar3 = trigger.querySelector<HTMLDivElement>(".bar-3")!;
+    const input = trigger.querySelector<HTMLInputElement>("input")!;
+    const backdrop = document.getElementById("sidebar__nav__backdrop")!;
+    const nav = backdrop.querySelector("nav")!;
+    const links = nav.querySelectorAll("a");
 
-    if (input.checked === true) {
-        backdrop.style.display = "flex";
-        menu.style.display = "inline-block";
-        menu.style.transform = "translateX(0%)";
-    } else {
-        backdrop.style.display = "none";
-        menu.style.display = "none";
-        menu.style.transform = "translateX(200%)";
-    }
+    nav.style.transform = "translateX(300px)";
 
-    icon.addEventListener("click", () => {
+    let offsetY = 13.3359375;
+
+    const toggle = () => {
         input.checked = !input.checked;
-        if (input.checked === true) {
-            backdrop.style.display = "flex";
-            menu.style.display = "inline-block";
-            sleep(100).then(() => {
-                menu.style.transform = "translateX(0%)";
+
+        if (input.checked) {
+            backdrop.classList.remove("hidden");
+            backdrop.classList.add("flex");
+            bar1.style.transform = `translateY(${offsetY}px)`;
+            bar3.style.transform = `translateY(-${offsetY}px)`;
+            bar2.style.opacity = "0";
+            delay(50).then(() => {
+                nav.style.transform = "translateX(0)";
+            });
+            delay(200).then(() => {
+                bar1.style.transform = `translateY(${offsetY}px) rotate(45deg)`;
+                bar3.style.transform = `translateY(-${offsetY}px) rotate(-45deg)`;
             });
         } else {
-            menu.style.transform = "translateX(200%)";
-            sleep(200).then(() => {
-                menu.style.display = "none";
-                backdrop.style.display = "none";
+            nav.style.transform = "translateX(300px)";
+            bar1.style.transform = `translateY(${offsetY}px) rotate(0)`;
+            bar3.style.transform = `translateY(-${offsetY}px) rotate(0)`;
+            delay(200).then(() => {
+                bar1.style.transform = "translateY(0) rotate(0)";
+                bar3.style.transform = "translateY(0) rotate(0)";
+            });
+            delay(200).then(() => {
+                bar2.style.opacity = "1";
+                backdrop.classList.remove("flex");
+                backdrop.classList.add("hidden");
             });
         }
-    });
+    };
+
+    trigger.addEventListener("click", toggle);
+    backdrop.addEventListener("click", toggle);
+    links.forEach((link) => link.addEventListener("click", toggle));
+    nav.addEventListener("click", (e) => e.stopPropagation());
 </script>

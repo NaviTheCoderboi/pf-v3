@@ -25,26 +25,30 @@
 </style>
 
 <script>
-    // prettier-off
-    const heroCanvas = document.getElementById(
-        "hero__canvas"
-    ) as HTMLDivElement;
-    const heroCanvasMask = document.getElementById(
-        "hero__canvas__mask"
-    ) as HTMLDivElement;
+    const attachHeroListener = () => {
+        const shouldAttach = window.location.pathname === "/";
+        if (shouldAttach) {
+            const heroCanvas = document.getElementById(
+                "hero__canvas"
+            ) as HTMLDivElement;
+            const heroCanvasMask = document.getElementById(
+                "hero__canvas__mask"
+            ) as HTMLDivElement;
 
-    heroCanvas.addEventListener("mousemove", (e) => {
-        let { left, top } = heroCanvas.getBoundingClientRect();
+            heroCanvas.addEventListener("mousemove", (e) => {
+                let { left, top } = heroCanvas.getBoundingClientRect();
 
-        let mouseX = e.clientX - left;
-        let mouseY = e.clientY - top;
+                let mouseX = e.clientX - left;
+                let mouseY = e.clientY - top;
 
-        heroCanvasMask.style.maskImage = `radial-gradient(
-            300px circle at ${mouseX}px ${mouseY}px,
-            black 0%,
-            transparent 100%
-        )`;
-    });
+                heroCanvasMask.style.maskImage = `radial-gradient(
+                    300px circle at ${mouseX}px ${mouseY}px,
+                    black 0%,
+                    transparent 100%
+                )`;
+            });
+        }
+    };
 
-    // prettier-off
+    document.addEventListener("astro:page-load", attachHeroListener);
 </script>

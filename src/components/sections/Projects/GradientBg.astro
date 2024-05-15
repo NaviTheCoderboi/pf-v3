@@ -1,0 +1,68 @@
+---
+interface Props {
+    animationDelay: number;
+}
+
+const { animationDelay } = Astro.props;
+---
+
+<li
+    data-motion="fade slide"
+    data-motion-easing="cubic-bezier(0.25, 0.1, 0.25, 1)"
+    data-motion-fade-easing="ease-out"
+    data-motion-slide-from-x="-100px"
+    data-motion-slide-to-x="0px"
+    data-motion-duration="500"
+    data-motion-delay={animationDelay}
+    data-motion-threshhold="0.4"
+>
+    <div
+        class="projects__card relative p-1 group rounded-3xl transform-3d perspective-distant h-full w-full"
+    >
+        <div
+            class="projects__card__overlay absolute inset-0 rounded-[inherit] z-[1] opacity-60 group-hover:opacity-100 blur-xl transition duration-500 will-change-transform bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+        >
+        </div>
+        <div
+            class="projects__card__overlay absolute inset-0 rounded-[inherit] z-[1] will-change-transform bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+        >
+        </div>
+        <slot />
+    </div>
+</li>
+
+<style>
+    .projects__card__overlay {
+        background-size: 400% 400%;
+        animation: move 5s infinite reverse;
+    }
+
+    @keyframes move {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+</style>
+
+<script>
+    import VanillaTilt from "vanilla-tilt";
+
+    document.addEventListener("astro:page-load", () => {
+        VanillaTilt.init(
+            Array.from(document.querySelectorAll(".projects__card")),
+            {
+                speed: 400,
+                glare: true,
+                "max-glare": 0.8,
+                scale: 1.02,
+                max: 10
+            }
+        );
+    });
+</script>

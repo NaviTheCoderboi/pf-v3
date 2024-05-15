@@ -1,0 +1,7 @@
+{
+    "$schema": "./base.json",
+    "title": "Vivid",
+    "description": "A toy webframework made by me for learning purpose",
+    "url": "https://navithecoderboi.github.io/vivid/",
+    "banner": "vivid"
+}
