@@ -17,7 +17,13 @@ const links = {
         class="mx-auto w-full lg:w-3/5 h-full grid place-content-between grid-rows-1 grid-cols-2 lg:grid-cols-3 px-7 md:px-10 py-4 lg:rounded-full backdrop-filter backdrop-blur-sm bg-zinc-800/30"
     >
         <a href="/">
-            <Image src={Logo} alt="navithecoderboi" width={50} height={60} />
+            <Image
+                src={Logo}
+                alt="navithecoderboi"
+                loading="eager"
+                width={50}
+                height={60}
+            />
         </a>
         <ul class="lg:flex justify-center items-center gap-2 hidden">
             {
@@ -34,6 +40,7 @@ const links = {
             class="lg:flex items-center justify-end hidden"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Github Profile Link"
         >
             <Github
                 class="size-10 text-zinc-400 hover:text-zinc-200 duration-300"

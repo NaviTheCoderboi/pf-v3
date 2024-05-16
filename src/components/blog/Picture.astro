@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    src: string;
+    aspectRatio: number | `${number}:${number}`;
+    alt: string;
+    type: "normal" | "wide";
+    contain?: boolean;
+}
+
+const { props } = Astro;
+---
+
+<article
+    class={`wide-media col-span-full max-w-5xl w-full mx-auto rounded overflow-hidden ${
+        Astro.props.contain ? "object-contain" : "object-cover"
+    }`}
+>
+    {
+        props.type === "normal" ? (
+            <Image
+                src={props.src}
+                width={800}
+                widths={[800, 500]}
+                class="h-full w-full rounded bg-black"
+                style={{
+                    aspectRatio:
+                        typeof props.aspectRatio === "string"
+                            ? props.aspectRatio.replace(":", "/")
+                            : props.aspectRatio,
+                    maxWidth:
+                        typeof props.aspectRatio === "string"
+                            ? `${props.aspectRatio.split(":")[0]}px`
+                            : "100%"
+                }}
+                sizes="(min-width: 500px) 800px, 500px"
+                alt={props.alt || ""}
+                loading={"lazy"}
+                inferSize={true}
+            />
+        ) : (
+            <Image
+                class="w-full rounded"
+                style={{
+                    aspectRatio:
+                        typeof props.aspectRatio === "string"
+                            ? props.aspectRatio.replace(":", "/")
+                            : props.aspectRatio
+                }}
+                src={props.src}
+                width={1024}
+                format="webp"
+                sizes="(min-width: 500px) 1024px, 500px"
+                alt={props.alt ?? ""}
+                loading={"lazy"}
+                inferSize={true}
+            />
+        )
+    }
+</article>
+
+<style>
+    .wide-media:not(.object-fit-contain) :global(> *) {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16/9;
+    }
+
+    .wide-media.object-fit-contain :global(> *) {
+        object-fit: contain;
+    }
+    .wide-media.object-fit-cover :global(> *) {
+        object-fit: cover;
+    }
+</style>

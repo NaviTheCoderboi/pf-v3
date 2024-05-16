@@ -8,11 +8,24 @@ const projects = await getProjects();
 
 <section class="lg:min-h-screen w-full" id="projects">
     <div
-        class="flex flex-col justify-center gap-10 h-full w-6/7 lg:w-5/9 mx-auto pt-[7.4rem] pb-16 h-full"
+        class="flex flex-col justify-center gap-10 h-full w-6/7 lg:w-1/2 mx-auto pt-[7.4rem] pb-16 h-full"
     >
         <SectionHeader title="Projects" serial={2} />
+        <p
+            class="text-lg font-light text-zinc-300"
+            data-motion="fade slide"
+            data-motion-easing="cubic-bezier(0.25, 0.1, 0.25, 1)"
+            data-motion-fade-easing="ease-out"
+            data-motion-slide-from-y="-50px"
+            data-motion-slide-to-y="0px"
+            data-motion-duration="400"
+            data-motion-delay="200"
+        >
+            Here are some of the projects I've worked on. Don't forget to star
+            your favorite ones on GitHub!
+        </p>
         <ul
-            class="flex h-full w-full flex-wrap items-center justify-center gap-7"
+            class="flex h-full w-full flex-wrap items-center justify-center xl:justify-between gap-7"
         >
             {
                 projects.map((pj, i) => (

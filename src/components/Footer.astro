@@ -1,0 +1,36 @@
+---
+import Github from "@assets/icons/Github.astro";
+import Mail from "@assets/icons/Mail.astro";
+import { USERNAME } from "@lib/constants";
+
+const socials = {
+    github: [`https://github.com/${USERNAME}`, Github],
+    mail: ["mailto:navindersingh568@gmail.com", Mail]
+} as const;
+---
+
+<footer class="w-full border-t-zinc-700 border-t-0.5">
+    <ul
+        class="flex flex-col md:flex-row justify-between items-center gap-5 w-full xl:w-2/3 bg-zinc-900 px-6 py-3 mx-auto"
+    >
+        <li
+            class="flex justify-start w-full md:w-fit md:justify-center items-center gap-3 order-0 md:order-1"
+        >
+            {
+                Object.entries(socials).map(([_, [url, Icon]]) => (
+                    <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Visit my ${url === socials.github[0] ? "Github" : "Mail"} profile`}
+                    >
+                        <Icon class="size-9 text-zinc-300 hover:text-zinc-100 duration-300" />
+                    </a>
+                ))
+            }
+        </li>
+        <li class="text-zinc-400 font-mono text-lg font-semibold">
+            MIT LICENSE © 2024 - {USERNAME}
+        </li>
+    </ul>
+</footer>

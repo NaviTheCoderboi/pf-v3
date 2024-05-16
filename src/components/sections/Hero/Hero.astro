@@ -3,6 +3,7 @@ import heroImage from "@assets/hero.png";
 import { Picture } from "astro:assets";
 import HeroWrapper from "./HeroWrapper.astro";
 import Star from "@assets/icons/Star.astro";
+import { GITHUB_URL } from "@lib/constants";
 ---
 
 <HeroWrapper>
@@ -38,9 +39,9 @@ import Star from "@assets/icons/Star.astro";
                     hitting the books, you'll find me lost in the world of
                     coding.
                 </p>
-                <ul class="flex items-center gap-5">
+                <div class="flex items-center gap-5">
                     <a
-                        href="https://github.com/navithecoderboi/portfolio"
+                        href={GITHUB_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         class="p-1 relative active:scale-95 duration-200"
@@ -56,7 +57,7 @@ import Star from "@assets/icons/Star.astro";
                             on GitHub
                         </div>
                     </a>
-                </ul>
+                </div>
             </div>
         </main>
     </div>
