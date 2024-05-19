@@ -16,6 +16,7 @@ icons = Object.keys(icons).map((key) => icons[key]());
                     alt={"skill-" + key}
                     height={50}
                     loading="eager"
+                    aria-label={`skill-${key}`}
                     class="hover:scale-110 hover:-translate-y-2 duration-200"
                 />
             ))

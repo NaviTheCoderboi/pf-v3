@@ -1,0 +1,109 @@
+---
+import Arrow from "@assets/icons/Arrow.astro";
+
+interface Props {
+    currentPage: number;
+    allPages: {
+        page: number;
+        url: string;
+    }[];
+}
+
+const { currentPage, allPages } = Astro.props;
+
+const getPage = (page: number) => {
+    if (page < 1) {
+        return allPages[allPages.length - 1] || { url: "#", page: 1 };
+    }
+    return allPages.find((p) => p.page === page) || { url: "#", page: 1 };
+};
+
+const range = (lo: number, hi: number) =>
+    Array.from({ length: hi - lo }, (_, i) => i + lo);
+
+const pagination =
+    (count: number, ellipsis: string = "…") =>
+    (page: number, total: number) => {
+        const start = Math.max(
+            1,
+            Math.min(page - Math.floor((count - 3) / 2), total - count + 2)
+        );
+        const end = Math.min(
+            total,
+            Math.max(page + Math.floor((count - 2) / 2), count - 1)
+        );
+        return [
+            ...(start > 2 ? [1, ellipsis] : start > 1 ? [1] : []),
+            ...range(start, end + 1),
+            ...(end < total - 1
+                ? [ellipsis, total]
+                : end < total
+                  ? [total]
+                  : [])
+        ];
+    };
+
+const pages = pagination(5)(5, allPages.length);
+---
+
+<nav class="flex justify-center items-center gap-2 mt-5" id="blog__pagination">
+    {
+        currentPage === getPage(1).page ? (
+            <span
+                class="p-2 size-10 rounded-xl bg-zinc-800 hover:bg-zinc-700 duration-200 opacity-50 pointer-events-none"
+                aria-label="Disabled previous page"
+                aria-disabled="true"
+            >
+                <Arrow direction="left" class="size-6 text-white" />
+            </span>
+        ) : (
+            <a
+                href={getPage(currentPage - 1).url}
+                class="p-2 size-10 rounded-xl bg-zinc-800 hover:bg-zinc-700 duration-200"
+                aria-label="Next page"
+            >
+                <Arrow direction="left" class="size-6 text-white" />
+            </a>
+        )
+    }
+    {
+        pages.map((page) => {
+            const isCurrent = page === currentPage;
+            return page == "…" ? (
+                <span
+                    class={`flex justify-center items-center p-2 size-10 rounded-xl bg-zinc-800 duration-200`}
+                    aria-label="ellipsis"
+                >
+                    {page}
+                </span>
+            ) : (
+                <a
+                    href={getPage(Number(page)).url}
+                    class={`flex justify-center items-center p-2 size-10 rounded-xl ${isCurrent ? "bg-secondary-500" : "bg-zinc-800 hover:bg-zinc-700"} duration-200`}
+                    aria-label={`page ${page} of ${allPages.length} pages`}
+                >
+                    {page}
+                </a>
+            );
+        })
+    }
+    {
+        currentPage === getPage(-1).page ? (
+            <span
+                class="p-2 size-10 rounded-xl bg-zinc-800 hover:bg-zinc-700 duration-200 opacity-50 pointer-events-none"
+                aria-label="Disabled next page"
+                aria-disabled="true"
+            >
+                <Arrow direction="right" class="size-6 text-white" />
+            </span>
+        ) : (
+            <a
+                href={getPage(currentPage + 1).url}
+                class="p-2 size-10 rounded-xl bg-zinc-800 hover:bg-zinc-700 duration-200"
+                aria-label="Next page"
+            >
+                <Arrow direction="right" class="size-6 text-white" />
+            </a>
+        )
+    }
+</nav>

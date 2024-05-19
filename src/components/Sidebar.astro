@@ -5,7 +5,7 @@ import Projects from "@assets/icons/Projects.astro";
 import Blog from "@assets/icons/Blog.astro";
 
 const links = {
-    Home: ["/#hero__canvas", Home],
+    Home: ["/#home", Home],
     About: ["/#about", About],
     Projects: ["/#projects", Projects],
     Blog: ["/blog", Blog]
@@ -13,7 +13,11 @@ const links = {
 ---
 
 <div class="flex justify-end items-center lg:hidden overflow-hidden">
-    <button class="flex flex-col gap-2 w-12 h-8 z-[52]" id="sidebar__trigger">
+    <button
+        tabindex="0"
+        class="flex flex-col gap-2 w-12 h-8 z-[52]"
+        id="sidebar__trigger"
+    >
         <div class="bar-1 w-full h-full bg-white rounded-full duration-200">
         </div>
         <div class="bar-2 w-full h-full bg-white rounded-full duration-200">
@@ -83,6 +87,7 @@ const links = {
                 bar1.style.transform = `translateY(${offsetY}px) rotate(45deg)`;
                 bar3.style.transform = `translateY(-${offsetY}px) rotate(-45deg)`;
             });
+            nav.ariaExpanded = "true";
         } else {
             nav.style.transform = "translateX(300px)";
             bar1.style.transform = `translateY(${offsetY}px) rotate(0)`;
@@ -96,6 +101,7 @@ const links = {
                 backdrop.classList.remove("flex");
                 backdrop.classList.add("hidden");
             });
+            nav.ariaExpanded = "false";
         }
     };
 

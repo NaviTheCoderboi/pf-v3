@@ -71,6 +71,10 @@ body {
     background-color: var(--color-slate-700);
 }
 
+::view-transition-group(body) {
+    animation-duration: 2s;
+}
+
 img {
     content-visibility: auto;
 }

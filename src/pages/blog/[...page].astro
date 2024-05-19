@@ -1,0 +1,94 @@
+---
+import Logo from "@assets/logo.png";
+import BlogCard from "@components/blog/sections/BlogCard.astro";
+import Header from "@components/blog/sections/Header.astro";
+import Pagination from "@components/blog/sections/Pagination.astro";
+import Layout from "@layouts/Layout.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const blogs = await getCollection("blog");
+    const sorted = blogs.sort((a, b) => {
+        return b.data.postedOn.getTime() - a.data.postedOn.getTime();
+    });
+    return paginate(sorted, { pageSize: 4 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+const _allPages = [...Array(page.lastPage).keys()].map((i) => {
+    return `/blog${i === 0 ? "" : `/${String(i + 1)}`}`;
+});
+
+const allPages = _allPages.map((page, i) => {
+    return {
+        page: i + 1,
+        url: page
+    };
+});
+
+const recommended = [
+    { title: "How to make a blog using next.js?", url: "/blog/2" },
+    { title: "How to make a blog using next.js?", url: "/blog/2" }
+] as const;
+---
+
+<Layout
+    title="NaviTheCoderboi | blog"
+    description="Hello! I'm NaviTheCoderboi, a developer from India. Welcome to my portfolio! you can read about me here and my blogs too"
+    icon={Logo.src}
+    canonical={import.meta.env.SITE}
+    themeColor="#7828c8"
+    url={import.meta.env.SITE}
+    locale="en"
+>
+    <Header /><div class="w-full lg:w-2/3 min-h-screen mx-auto py-6">
+        <div class="flex lg:flex-row flex-col gap-4">
+            <div class="w-full px-4">
+                <ul
+                    class="w-full flex flex-col justify-center items-center gap-10"
+                >
+                    {
+                        page.data.map((blog) => (
+                            <li class="w-full">
+                                <BlogCard
+                                    title={blog.data.title}
+                                    description={blog.data.description}
+                                    postedOn={blog.data.postedOn}
+                                    cover={blog.data.cover}
+                                    slug={blog.slug}
+                                />
+                            </li>
+                        ))
+                    }
+                </ul>
+                <Pagination
+                    allPages={allPages}
+                    currentPage={page.currentPage}
+                />
+            </div>
+            <aside
+                class="flex flex-col items-center gap-10 min-w-[20rem] lg:max-w-xs"
+            >
+                <div class="flex flex-col justify-center gap-4 w-full">
+                    <h2 class="text-xl font-semibold">Recommened to read</h2>
+                    <ul class="flex flex-col justify-center items-center gap-2">
+                        {
+                            recommended.map((b) => (
+                                <li class="w-full">
+                                    <a
+                                        href={b.url}
+                                        class="text-lg font-light text-accent-400 hover:text-zinc-500 duration-200 underline"
+                                    >
+                                        {b.title}
+                                    </a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</Layout>

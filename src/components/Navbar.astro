@@ -5,21 +5,21 @@ import { Image } from "astro:assets";
 import Sidebar from "./Sidebar.astro";
 
 const links = {
-    Home: "/#hero__canvas",
+    Home: "/#home",
     About: "/#about",
     Projects: "/#projects",
     Blog: "/blog"
 } as const;
 ---
 
-<nav class="w-full lg:px-6 lg:py-3 sticky lg:fixed top-0 left-0 z-50">
-    <div
-        class="mx-auto w-full lg:w-3/5 h-full grid place-content-between grid-rows-1 grid-cols-2 lg:grid-cols-3 px-7 md:px-10 py-4 lg:rounded-full backdrop-filter backdrop-blur-sm bg-zinc-800/30"
+<header class="w-full lg:px-6 lg:py-3 sticky top-0 left-0 z-50">
+    <nav
+        class="mx-auto w-full lg:w-3/5 h-full grid place-content-between grid-rows-1 grid-cols-2 lg:grid-cols-3 px-7 md:px-10 py-4 lg:rounded-full backdrop-filter backdrop-blur-sm bg-zinc-800/50"
     >
-        <a href="/">
+        <a href="/" aria-label="Home page">
             <Image
                 src={Logo}
-                alt="navithecoderboi"
+                alt="Logo of navithecoderboi"
                 loading="eager"
                 width={50}
                 height={60}
@@ -28,7 +28,7 @@ const links = {
         <ul class="lg:flex justify-center items-center gap-2 hidden">
             {
                 Object.entries(links).map(([k, v]) => (
-                    <li class="group relative text-lg font-semibold text-zinc-400 hover:text-zinc-300 duration-300 rounded-full px-4 py-2">
+                    <li class="group relative text-lg font-semibold text-zinc-100 hover:text-zinc-300 duration-100 rounded-full px-4 py-2">
                         <a href={v}>{k}</a>
                         <div class="scale-x-0 group-hover:scale-x-100 absolute inset-x-0 w-full mx-auto -bottom-px bg-gradient-to-r from-transparent via-secondary-500 to-transparent h-px duration-300" />
                     </li>
@@ -43,12 +43,12 @@ const links = {
             aria-label="Github Profile Link"
         >
             <Github
-                class="size-10 text-zinc-400 hover:text-zinc-200 duration-300"
+                class="size-10 text-zinc-100 hover:text-zinc-400 duration-300"
             />
         </a>
         <Sidebar />
-    </div>
-</nav>
+    </nav>
+</header>
 
 <style scoped>
     nav {

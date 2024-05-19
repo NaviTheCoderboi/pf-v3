@@ -1,0 +1,64 @@
+---
+import Search from "@assets/icons/Search.astro";
+import BlogSearch from "@components/BlogSearch.astro";
+import Kbd from "@components/Kbd.astro";
+---
+
+<header class="w-full px-4 py-2">
+    <button
+        class="w-5/6 md:w-4/7 lg:w-2/7 flex items-center gap-4 text-zinc-300 bg-zinc-800 border-0.5 border-zinc-700 rounded-full mx-auto hover:border-zinc-600 duration-100 px-4 py-3 cursor-pointer group"
+        type="button"
+        id="blog__search__trigger"
+        aria-label="Search blogs"
+    >
+        <Search
+            class="size-6 text-zinc-300 group-hover:text-secondary-400 duration-200"
+        />
+        <span class="flex justify-center items-center gap-2">
+            <span class="group-hover:text-secondary-400 duration-200"
+                >Search</span
+            >
+            <Kbd>Ctrl</Kbd>
+            <span class="group-hover:text-secondary-400 duration-200">+</span>
+            <Kbd>K</Kbd>
+        </span>
+    </button>
+    <BlogSearch />
+</header>
+
+<script>
+    document.addEventListener("astro:page-load", () => {
+        if (window.location.pathname === "/blog") {
+            const blogSearch =
+                document.querySelector<HTMLDialogElement>("#blog__search")!;
+            const trigger = document.querySelector<HTMLButtonElement>(
+                "#blog__search__trigger"
+            )!;
+            const close = document.querySelector<HTMLButtonElement>(
+                "#blog__search__close"
+            )!;
+
+            trigger.addEventListener("click", () => {
+                blogSearch.showModal();
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.ctrlKey && e.key === "k") {
+                    e.preventDefault();
+                    blogSearch.showModal();
+                }
+            });
+
+            blogSearch.addEventListener("click", (e) => {
+                if (e.target === blogSearch) {
+                    e.stopPropagation();
+                    blogSearch.close();
+                }
+            });
+
+            close.addEventListener("click", () => {
+                blogSearch.close();
+            });
+        }
+    });
+</script>

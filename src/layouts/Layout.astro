@@ -16,7 +16,10 @@ const { ...rest } = Astro.props;
         <ViewTransitions />
         <SEO {...rest} />
     </head>
-    <body transition:animate={fade({ duration: "0.5s" })}>
+    <body
+        transition:animate={fade({ duration: "0.5s" })}
+        transition:name="body"
+    >
         <Navbar />
         <slot />
         <Footer />

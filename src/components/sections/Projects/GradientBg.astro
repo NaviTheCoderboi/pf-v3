@@ -54,15 +54,18 @@ const { animationDelay } = Astro.props;
     import VanillaTilt from "vanilla-tilt";
 
     document.addEventListener("astro:page-load", () => {
-        VanillaTilt.init(
-            Array.from(document.querySelectorAll(".projects__card")),
-            {
-                speed: 400,
-                glare: true,
-                "max-glare": 0.8,
-                scale: 1.02,
-                max: 10
-            }
-        );
+        if (window.location.pathname === "/") {
+            VanillaTilt.init(
+                Array.from(document.querySelectorAll(".projects__card")),
+                {
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.8,
+                    scale: 1.02,
+                    max: 10,
+                    reverse: true
+                }
+            );
+        }
     });
 </script>
