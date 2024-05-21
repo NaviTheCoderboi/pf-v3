@@ -1,0 +1,106 @@
+---
+import Logo from "@assets/logo.png";
+import Layout from "@layouts/Layout.astro";
+import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { format } from "date-fns";
+
+export const getStaticPaths = (async () => {
+    const blog = await getCollection("blog");
+    return blog.map((bg) => ({
+        params: {
+            slug: bg.slug
+        },
+        props: {
+            blog: bg
+        }
+    }));
+}) satisfies GetStaticPaths;
+
+const { blog } = Astro.props;
+
+const authors = (await getCollection("authors")).filter((author) => {
+    return blog.data.authors.includes(author.data.name);
+});
+
+const { Content } = await blog.render();
+---
+
+<Layout
+    title={`NaviTheCoderboi | ${blog.data.title}`}
+    description={blog.data.description}
+    icon={Logo.src}
+    canonical={import.meta.env.SITE + "/blog/" + blog.slug}
+    themeColor="#7828c8"
+    url={import.meta.env.SITE + "/blog/" + blog.slug}
+    locale="en"
+    ogImage={blog.data.cover.src}
+    twitterImage={blog.data.cover.src}
+>
+    <main class="min-h-screen max-w-4xl mx-auto px-6">
+        <article class="w-full h-full">
+            <header class="flex flex-col justify-center gap-3">
+                <time
+                    datetime={blog.data.postedOn.toISOString()}
+                    class="text-zinc-400 text-sm leading-6"
+                >
+                    {format(blog.data.postedOn, "LLLL d, yyyy")}
+                </time>
+                <ul class="flex items-center gap-5">
+                    {
+                        authors.map((author) => (
+                            <li class="flex justify-center items-center gap-2">
+                                {typeof author.data.avatar === "string" ? (
+                                    <img
+                                        src={author.data.avatar}
+                                        alt={author.data.name}
+                                        class="size-8 rounded-full"
+                                    />
+                                ) : (
+                                    <Image
+                                        src={author.data.avatar}
+                                        alt={author.data.name}
+                                        class="size-8 rounded-full"
+                                    />
+                                )}
+                                <div class="flex flex-col items-end gap-1">
+                                    <span class="text-sm leading-4 text-zinc-200">
+                                        {author.data.name}
+                                    </span>
+                                    <a
+                                        href={author.data.social}
+                                        aria-label={`Visit ${author.data.name}'s ${author.data.social}`}
+                                        class="text-sm leading-4 text-secondary-300 w-full"
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                    >
+                                        @github
+                                    </a>
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+                <h1
+                    class="text-2xl font-extrabold tracking-tight text-zinc-200 md:text-3xl"
+                >
+                    {blog.data.title}
+                </h1>
+                <div class="mx-auto w-full max-w-screen-lg">
+                    <Image
+                        src={blog.data.cover}
+                        width={blog.data.cover.width}
+                        height={blog.data.cover.height}
+                        loading="lazy"
+                        alt={blog.data.title}
+                        class="min-h-[240px] w-full object-cover"
+                    />
+                </div>
+            </header>
+            <div class="prose prose-zinc prose-invert py-6 md:py-10 w-full">
+                <Content />
+            </div>
+        </article>
+    </main>
+</Layout>

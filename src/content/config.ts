@@ -7,7 +7,6 @@ const blogModel = ({ image }: { image: ImageFunction }) => {
         title: z.string(),
         description: z.string(),
         cover: image(),
-        tags: z.array(z.string()),
         postedOn: z.coerce.date(),
         authors: z.array(z.string())
     });

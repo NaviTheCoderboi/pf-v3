@@ -6,4 +6,6 @@ interface SEOProps {
     themeColor: string;
     url: string;
     locale: string;
+    ogImage?: string;
+    twitterImage?: string;
 }

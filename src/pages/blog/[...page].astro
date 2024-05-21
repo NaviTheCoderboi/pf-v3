@@ -38,9 +38,11 @@ const recommended = [
     title="NaviTheCoderboi | blog"
     description="Hello! I'm NaviTheCoderboi, a developer from India. Welcome to my portfolio! you can read about me here and my blogs too"
     icon={Logo.src}
-    canonical={import.meta.env.SITE}
+    canonical={import.meta.env.SITE +
+        allPages.find((p) => p.page === page.currentPage)?.url}
     themeColor="#7828c8"
-    url={import.meta.env.SITE}
+    url={import.meta.env.SITE +
+        allPages.find((p) => p.page === page.currentPage)?.url}
     locale="en"
 >
     <Header /><div class="w-full lg:w-2/3 min-h-screen mx-auto py-6">
@@ -71,7 +73,7 @@ const recommended = [
             <aside
                 class="flex flex-col items-center gap-10 min-w-[20rem] lg:max-w-xs"
             >
-                <div class="flex flex-col justify-center gap-4 w-full">
+                <div class="flex flex-col justify-center gap-4 w-full px-6">
                     <h2 class="text-xl font-semibold">Recommened to read</h2>
                     <ul class="flex flex-col justify-center items-center gap-2">
                         {

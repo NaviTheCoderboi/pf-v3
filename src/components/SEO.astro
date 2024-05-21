@@ -1,8 +1,17 @@
 ---
 interface Props extends SEOProps {}
 
-const { title, description, icon, canonical, themeColor, url, locale } =
-    Astro.props;
+const {
+    title,
+    description,
+    icon,
+    canonical,
+    themeColor,
+    url,
+    locale,
+    ogImage,
+    twitterImage
+} = Astro.props;
 ---
 
 <title>{title}</title>
@@ -19,10 +28,10 @@ const { title, description, icon, canonical, themeColor, url, locale } =
 <meta name="og:url" content={url} />
 <meta name="og:locale" content={locale} />
 <meta name="og:site_name" content={title} />
-<meta name="og:image" content={icon} />
+<meta name="og:image" content={ogImage ? ogImage : icon} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content={title} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={icon} />
+<meta name="twitter:image" content={twitterImage ? twitterImage : icon} />
 <meta name="generator" content={Astro.generator} />
