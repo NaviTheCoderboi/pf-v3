@@ -37,6 +37,7 @@ const { Content } = await blog.render();
     locale="en"
     ogImage={blog.data.cover.src}
     twitterImage={blog.data.cover.src}
+    transition:animate="fade"
 >
     <main class="min-h-screen max-w-4xl mx-auto px-6">
         <article class="w-full h-full">
@@ -95,6 +96,7 @@ const { Content } = await blog.render();
                         loading="lazy"
                         alt={blog.data.title}
                         class="min-h-[240px] w-full object-cover"
+                        transition:name={blog.slug}
                     />
                 </div>
             </header>

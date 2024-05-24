@@ -39,7 +39,13 @@ const { title, description, cover, postedOn, slug } = Astro.props;
                 {format(postedOn, "LLLL d, yyyy")}
             </time>
         </header>
-        <Image src={cover} alt={title} loading="lazy" class="aspect-auto" />
+        <Image
+            transition:name={slug}
+            src={cover}
+            alt={title}
+            loading="lazy"
+            class="aspect-auto"
+        />
         <div class="grid gap-y-4 p-4">
             <h2 class="text-3xl font-bold">{title}</h2>
             <p class="text-lg font-light text-zinc-300">

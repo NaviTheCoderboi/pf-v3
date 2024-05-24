@@ -1,0 +1,72 @@
+---
+import About from "@assets/icons/About.astro";
+import Danger from "@assets/icons/Danger.astro";
+import Rocket from "@assets/icons/Rocket.astro";
+import Warning from "@assets/icons/Warning.astro";
+
+const _type = ["note", "warning", "danger", "tip"] as const;
+
+interface Props {
+    type: (typeof _type)[number];
+    title?: string;
+}
+
+let { type, title } = Astro.props;
+
+if (!title) {
+    switch (type) {
+        case "note":
+            title = "Note";
+            break;
+        case "warning":
+            title = "Warning";
+            break;
+        case "danger":
+            title = "Danger";
+            break;
+        case "tip":
+            title = "Tip";
+            break;
+    }
+}
+
+const classes: Record<(typeof _type)[number], string> = {
+    note: "bg-blue-900/70 text-blue-100",
+    warning: "bg-yellow-500/40 text-yellow-100",
+    danger: "bg-pink-600/35 text-rose-100",
+    tip: "bg-fuchsia-900/70 text-fuchsia-100"
+};
+
+const borderColors: Record<(typeof _type)[number], string> = {
+    note: "var(--color-blue-500, #3b82f6)",
+    warning: "var(--color-yellow-500, #eab308)",
+    danger: "var(--color-rose-500, #f43f5e)",
+    tip: "var(--color-fuchsia-500, #d946ef)"
+};
+---
+
+<aside
+    aria-label={title}
+    class={`not-prose space-y-2 px-6 py-3 mt-4 rounded-tl-md rounded-bl-md ${classes[type]}`}
+    style={`border-inline-start: .30rem solid ${borderColors[type]}`}
+>
+    <h3
+        class="w-fit flex justify-between items-center gap-2 text-xl font-semibold m-0! p-0!"
+    >
+        {
+            type === "tip" ? (
+                <Rocket class="size-6" />
+            ) : type === "danger" ? (
+                <Danger class="size-6" />
+            ) : type === "warning" ? (
+                <Warning class="size-6" />
+            ) : (
+                <About class="size-6" />
+            )
+        }
+        {title}
+    </h3>
+    <div class="text-white text-sm font-light">
+        <slot />
+    </div>
+</aside>

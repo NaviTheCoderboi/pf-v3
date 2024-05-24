@@ -1,9 +1,23 @@
 ---
 import Search from "@assets/icons/Search.astro";
 import Kbd from "./Kbd.astro";
+import { getCollection } from "astro:content";
+
+const blogs = await getCollection("blog");
+
+let blogStr = blogs
+    .map((blog) => {
+        return `[${blog.data.title}:${blog.data.description}]`;
+    })
+    .join(",");
+
+console.log(blogStr);
 ---
 
 <dialog id="blog__search" class="backdrop:bg-black/40">
+    <div class="hidden" aria-hidden="true">
+        {blogStr}
+    </div>
     <div
         class="h-screen lg:h-fit fixed top-0 left-0 left-1/2 lg:top-1/5 -translate-x-1/2 w-[100vw] max-w-xl border-1 border-zinc-700 rounded-sm text-zinc-200 bg-zinc-800"
     >
@@ -25,7 +39,9 @@ import Kbd from "./Kbd.astro";
                 id="blog__search__close">Cancel</button
             >
         </div>
-        <div class="flex justify-center items-center gap-4 bg-slate-900">
+        <div
+            class="h-full lg:h-fit flex justify-center items-center gap-4 bg-slate-900"
+        >
             <span class="text-zinc-300 text-sm py-8">No results</span>
         </div>
         <ul
@@ -95,3 +111,9 @@ import Kbd from "./Kbd.astro";
         </ul>
     </div>
 </dialog>
+
+<script>
+    const input = document.querySelector("#blog__search input");
+
+    console.log(input);
+</script>

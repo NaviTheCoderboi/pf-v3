@@ -2,13 +2,35 @@
 import "@styles/globals.css";
 import "@fontsource-variable/inter";
 import Navbar from "@components/Navbar.astro";
-import { ViewTransitions, fade } from "astro:transitions";
+import { ViewTransitions } from "astro:transitions";
 import SEO from "@components/SEO.astro";
 import Footer from "@components/Footer.astro";
+import type { TransitionAnimationPair } from "astro";
 
 interface Props extends SEOProps {}
 
 const { ...rest } = Astro.props;
+
+const anim: TransitionAnimationPair = {
+    old: {
+        name: "stackBack",
+        duration: "0.3s",
+        easing: "ease-in",
+        fillMode: "forwards"
+    },
+    new: {
+        name: "stackFront",
+        duration: "0.3s",
+        delay: "0.3s",
+        easing: "ease-out",
+        fillMode: "backwards"
+    }
+};
+
+const transition = {
+    forwards: anim,
+    backwards: anim
+};
 ---
 
 <html lang="en">
@@ -17,12 +39,36 @@ const { ...rest } = Astro.props;
         <SEO {...rest} />
     </head>
     <body
-        transition:animate={fade({ duration: "0.5s" })}
+        transition:animate={transition}
         transition:name="body"
+        class="h-full transform-3d perspective-midrange"
     >
         <Navbar />
         <slot />
         <Footer />
         <script src="../lib/motion.ts"></script>
+        <style>
+            @keyframes stackBack {
+                from {
+                    transform: translateZ(0) translateY(100px);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateZ(-800px) translateY(0px);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes stackFront {
+                from {
+                    transform: translateZ(-800px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateZ(0);
+                    opacity: 1;
+                }
+            }
+        </style>
     </body>
 </html>
