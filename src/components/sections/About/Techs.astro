@@ -11,27 +11,31 @@ icons = Object.keys(icons).map((key) => icons[key]());
         {
             // @ts-ignore
             icons.map((i, key) => (
-                <Image
-                    src={i}
-                    alt={"skill-" + key}
-                    height={50}
-                    loading="eager"
-                    aria-label={`skill-${key}`}
-                    class="hover:scale-110 hover:-translate-y-2 duration-200"
-                />
+                <li>
+                    <Image
+                        src={i}
+                        alt={"skill-" + key}
+                        height={50}
+                        loading="eager"
+                        aria-label={`skill-${key}`}
+                        class="hover:scale-110 hover:-translate-y-2 duration-200"
+                    />
+                </li>
             ))
         }
         {
             // @ts-ignore
             icons.map((i, key) => (
-                <Image
-                    src={i}
-                    alt={"skill-cloned-" + key}
-                    height={50}
-                    aria-hidden="true"
-                    loading="eager"
-                    class="hover:scale-110 hover:-translate-y-2 duration-200"
-                />
+                <li>
+                    <Image
+                        src={i}
+                        alt={"skill-cloned-" + key}
+                        height={50}
+                        aria-hidden="true"
+                        loading="eager"
+                        class="hover:scale-110 hover:-translate-y-2 duration-200"
+                    />
+                </li>
             ))
         }
     </ul>
